@@ -246,7 +246,7 @@ export default function SubmitBidPage() {
   
   // Main return with loaded data
   return (
-    <div className="container py-8">
+    <div className="mx-auto max-w-6xl w-full px-4 sm:px-6 py-8">
       <div className="flex justify-between items-center mb-4">
         <Button variant="ghost" size="sm" asChild>
           <Link href={`/projects/${projectId}`}>
@@ -388,7 +388,7 @@ export default function SubmitBidPage() {
                   </p>
                 </div>
               )
-            </CardContent>
+            }</CardContent>
             {profile?.is_freelancer && existingBids.length === 0 && (
               <CardFooter className="flex justify-end">
                 <Button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
