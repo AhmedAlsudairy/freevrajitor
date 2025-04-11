@@ -274,31 +274,31 @@ export default async function DashboardPage() {
     avgRating
   } = await getDashboardData()
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
         {/* Welcome Banner */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center rounded-lg border p-4 md:p-6 bg-card">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center rounded-lg border p-4 sm:p-6 bg-card">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
               Welcome back, {profile && typeof profile.full_name === 'string' ? profile.full_name.split(' ')[0] : 'User'}!
             </h1>
-            <p className="text-muted-foreground">Monitor your performance and track your orders</p>
+            <p className="text-sm sm:text-base text-muted-foreground">Monitor your performance and track your orders</p>
           </div>
-          <div className="flex gap-2 mt-4 md:mt-0">
-            <Button asChild>
+          <div className="flex flex-wrap gap-2 mt-4 sm:mt-0 w-full sm:w-auto">
+            <Button size="sm" className="flex-1 sm:flex-initial" asChild>
               <Link href="/gigs/create">Create New Gig</Link>
             </Button>
-            <Button variant="outline" asChild>
+            <Button size="sm" className="flex-1 sm:flex-initial" variant="outline" asChild>
               <Link href="/profile">View Profile</Link>
             </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-full">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-full">
                   <DollarSign className="h-6 w-6 text-primary" />
                 </div>
                 <div>
@@ -311,9 +311,9 @@ export default async function DashboardPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-full">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-full">
                   <ShoppingCart className="h-6 w-6 text-primary" />
                 </div>
                 <div>
@@ -326,9 +326,9 @@ export default async function DashboardPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-full">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-full">
                   <Star className="h-6 w-6 text-primary" />
                 </div>
                 <div>
@@ -341,9 +341,9 @@ export default async function DashboardPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-full">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-full">
                   <BarChart className="h-6 w-6 text-primary" />
                 </div>
                 <div>
@@ -357,29 +357,32 @@ export default async function DashboardPage() {
         </div>
 
         {/* Orders Section */}
-        <div className="grid gap-6 md:grid-cols-3">
-          <Card className="md:col-span-2">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-3">
+          <Card className="col-span-1 md:col-span-2">
             <CardHeader className="pb-3">
               <CardTitle>Order Activity</CardTitle>
             </CardHeader>
             <CardContent>
               <Tabs defaultValue="current">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 text-xs sm:text-sm">
                   <TabsTrigger value="current">
-                    Current
-                    <Badge className="ml-2 bg-primary/10 text-primary" variant="secondary">
+                    <span className="hidden sm:inline">Current</span>
+                    <span className="sm:hidden">Current</span>
+                    <Badge className="ml-1 sm:ml-2 bg-primary/10 text-primary text-xs" variant="secondary">
                       {orderStats.pending + orderStats.inProgress}
                     </Badge>
                   </TabsTrigger>
                   <TabsTrigger value="completed">
-                    Completed
-                    <Badge className="ml-2 bg-primary/10 text-primary" variant="secondary">
+                    <span className="hidden sm:inline">Completed</span>
+                    <span className="sm:hidden">Done</span>
+                    <Badge className="ml-1 sm:ml-2 bg-primary/10 text-primary text-xs" variant="secondary">
                       {orderStats.completed}
                     </Badge>
                   </TabsTrigger>
                   <TabsTrigger value="cancelled">
-                    Cancelled
-                    <Badge className="ml-2 bg-primary/10 text-primary" variant="secondary">
+                    <span className="hidden sm:inline">Cancelled</span>
+                    <span className="sm:hidden">Cancel</span>
+                    <Badge className="ml-1 sm:ml-2 bg-primary/10 text-primary text-xs" variant="secondary">
                       {orderStats.cancelled}
                     </Badge>
                   </TabsTrigger>
@@ -391,8 +394,8 @@ export default async function DashboardPage() {
                     {recentOrders
                       .filter((order) => order.status === "In Progress")
                       .map((order) => (
-                        <div key={order.id} className="flex items-center justify-between border-b pb-4 last:border-0">
-                          <div className="flex items-start gap-4">
+                        <div key={order.id} className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 last:border-0">
+                          <div className="flex items-start gap-2 sm:gap-4">
                             <div className="bg-muted p-2 rounded-md">
                               <FileText className="h-5 w-5" />
                             </div>
@@ -403,7 +406,7 @@ export default async function DashboardPage() {
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 mt-2 sm:mt-0 ml-auto sm:ml-0">
                             <div className="text-sm font-medium">${order.amount}</div>
                             <Badge variant={order.status === "In Progress" ? "default" : "secondary"}>
                               {order.status}
@@ -429,8 +432,8 @@ export default async function DashboardPage() {
                     {recentOrders
                       .filter((order) => order.status === "Completed")
                       .map((order) => (
-                        <div key={order.id} className="flex items-center justify-between border-b pb-4 last:border-0">
-                          <div className="flex items-start gap-4">
+                        <div key={order.id} className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 last:border-0">
+                          <div className="flex items-start gap-2 sm:gap-4">
                             <div className="bg-muted p-2 rounded-md">
                               <FileText className="h-5 w-5" />
                             </div>
@@ -441,7 +444,7 @@ export default async function DashboardPage() {
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 mt-2 sm:mt-0 ml-auto sm:ml-0">
                             <div className="text-sm font-medium">${order.amount}</div>
                             <Badge variant="secondary">{order.status}</Badge>
                           </div>
@@ -554,8 +557,8 @@ export default async function DashboardPage() {
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {services.length > 0 ? services.map((service) => (
-                  <Card key={service.id} className="overflow-hidden">
-                    <div className="relative aspect-video">
+                  <Card key={service.id} className="overflow-hidden flex flex-col">
+                    <div className="relative aspect-video w-full">
                       <Image
                         src={service.image_url || `/placeholder.svg?height=320&width=400&text=${encodeURIComponent(service.title)}`}
                         alt={service.title}
@@ -563,7 +566,7 @@ export default async function DashboardPage() {
                         className="object-cover"
                       />
                     </div>
-                    <CardContent className="p-4">
+                    <CardContent className="p-3 sm:p-4 flex-1 flex flex-col">
                       <h3 className="font-medium mb-1 line-clamp-1">{service.title}</h3>
                       <div className="flex items-center gap-1 mb-2">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -572,7 +575,7 @@ export default async function DashboardPage() {
                           <span className="text-xs text-muted-foreground">({service.reviews_count})</span>
                         )}
                       </div>
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between text-sm mt-auto">
                         <span className="text-muted-foreground">From</span>
                         <span className="font-semibold">${service.price}</span>
                       </div>
@@ -597,29 +600,29 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <p className="text-muted-foreground">Find skilled freelancers for your projects.</p>
-                <div className="grid gap-4 grid-cols-2">
-                  <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" asChild>
+                <p className="text-sm sm:text-base text-muted-foreground">Find skilled freelancers for your projects.</p>
+                <div className="grid gap-2 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+                  <Button variant="outline" className="h-auto py-3 sm:py-4 flex flex-col gap-1 sm:gap-2" asChild>
                     <Link href="/search?category=design">
-                      <span className="text-lg">Design</span>
+                      <span className="text-base sm:text-lg">Design</span>
                       <span className="text-xs text-muted-foreground">Logo, UI/UX, Graphics</span>
                     </Link>
                   </Button>
-                  <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" asChild>
+                  <Button variant="outline" className="h-auto py-3 sm:py-4 flex flex-col gap-1 sm:gap-2" asChild>
                     <Link href="/search?category=development">
-                      <span className="text-lg">Development</span>
+                      <span className="text-base sm:text-lg">Development</span>
                       <span className="text-xs text-muted-foreground">Web, Mobile, Backend</span>
                     </Link>
                   </Button>
-                  <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" asChild>
+                  <Button variant="outline" className="h-auto py-3 sm:py-4 flex flex-col gap-1 sm:gap-2" asChild>
                     <Link href="/search?category=writing">
-                      <span className="text-lg">Writing</span>
+                      <span className="text-base sm:text-lg">Writing</span>
                       <span className="text-xs text-muted-foreground">Content, Copywriting</span>
                     </Link>
                   </Button>
-                  <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" asChild>
+                  <Button variant="outline" className="h-auto py-3 sm:py-4 flex flex-col gap-1 sm:gap-2" asChild>
                     <Link href="/search?category=marketing">
-                      <span className="text-lg">Marketing</span>
+                      <span className="text-base sm:text-lg">Marketing</span>
                       <span className="text-xs text-muted-foreground">SEO, Social Media</span>
                     </Link>
                   </Button>

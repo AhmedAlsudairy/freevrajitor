@@ -40,43 +40,43 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       label: "Orders",
       icon: <FileText className="h-5 w-5" />,
       href: "/orders",
-      active: pathname === "/orders",
+      active: pathname === "/orders" || pathname.startsWith("/orders/"),
     },
     {
       label: "Bids",
       icon: <FileText className="h-5 w-5" />,
       href: "/dashboard/bids",
-      active: pathname === "/dashboard/bids",
+      active: pathname === "/dashboard/bids" || pathname.startsWith("/dashboard/bids/"),
     },
     {
       label: "Messages",
       icon: <MessageSquare className="h-5 w-5" />,
       href: "/messages",
-      active: pathname === "/messages",
+      active: pathname === "/messages" || pathname.startsWith("/messages/"),
     },
     {
       label: "My Gigs",
       icon: <Package className="h-5 w-5" />,
       href: "/gigs",
-      active: pathname === "/gigs",
+      active: pathname === "/gigs" || pathname.startsWith("/gigs/"),
     },
     {
       label: "Earnings",
       icon: <CreditCard className="h-5 w-5" />,
       href: "/earnings",
-      active: pathname === "/earnings",
+      active: pathname === "/earnings" || pathname.startsWith("/earnings/"),
     },
     {
       label: "Profile",
       icon: <User className="h-5 w-5" />,
       href: "/profile",
-      active: pathname === "/profile",
+      active: pathname === "/profile" || pathname.startsWith("/profile/"),
     },
     {
       label: "Settings",
       icon: <Settings className="h-5 w-5" />,
       href: "/settings",
-      active: pathname === "/settings",
+      active: pathname === "/settings" || pathname.startsWith("/settings/"),
     },
   ]
 
@@ -153,7 +153,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 ))}
               </div>
             </div>
-            <div className="p-4 border-t">
+            <div className="p-4 border-t space-y-3">
+              <ThemeToggle />
+              <Button variant="outline" className="w-full justify-start gap-2" asChild>
+                <Link href="/">
+                  <span>View Marketplace</span>
+                </Link>
+              </Button>
               <Button variant="outline" className="w-full justify-start gap-2">
                 <LogOut className="h-4 w-4" />
                 <span>Log out</span>
@@ -162,20 +168,22 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </SheetContent>
         </Sheet>
 
-        <div className="flex-1 flex justify-center">
-          <Link href="/" className="font-semibold">
+        <div className="flex-1 flex justify-between items-center mx-2">
+          <div></div> {/* Empty div to help with spacing */}
+          <Link href="/" className="font-semibold text-lg">
             vrajitor
           </Link>
+          <ThemeToggle />
         </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <header className="flex items-center h-16 px-6 border-b md:justify-end">
+        <header className="flex items-center h-16 px-4 sm:px-6 border-b md:justify-end">
           <div className="md:hidden">
-            <span className="font-medium">Dashboard</span>
+            <span className="font-medium text-sm">{routes.find(route => route.active)?.label || 'Dashboard'}</span>
           </div>
-          <div className="ml-auto flex items-center gap-4">
+          <div className="ml-auto hidden md:flex items-center gap-4">
             <ThemeToggle />
             <Button variant="outline" size="sm" asChild>
               <Link href="/">View Marketplace</Link>
@@ -183,7 +191,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
         </header>
         <main className="flex-1 overflow-auto">
-          <div className="mx-auto max-w-6xl p-4 md:p-6 w-full">{children}</div>
+          <div className="mx-auto max-w-6xl p-3 sm:p-4 md:p-6 w-full">{children}</div>
         </main>
       </div>
     </div>
